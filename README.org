@@ -1,0 +1,22 @@
+* Run derby server from maven
+
+This is a maven project for starting and running derby network server.
+
+This maven project uses the maven plugin [[https://github.com/carlspring/derby-maven-plugin][derby-maven-plugin]] to start the derby network server.
+
+Usage example:
+#+BEGIN_EXAMPLE
+  mkdir -p ~/git
+  cd ~/git/
+  git clone https://github.com/steinarb/derby-runner.git
+  cd derby-runner
+  mvn derby:run
+#+END_EXAMPLE
+
+At this point derby server will be running and listening on port 1527 until Ctrl-C is pressed.
+
+* License
+
+The license for this git repository is Apache Public License v2.
+
+See the LICENSE file for details.
