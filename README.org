@@ -1,8 +1,8 @@
 * Run derby server from maven
 
-This is a maven project for starting and running derby network server.
+This maven project is a convenient way for running derby without having to download and install it.
 
-This maven project uses the maven plugin [[https://github.com/carlspring/derby-maven-plugin][derby-maven-plugin]] to start the derby network server.
+The maven project uses the maven plugin [[https://github.com/carlspring/derby-maven-plugin][derby-maven-plugin]] to start the derby network server.
 
 Usage example:
 #+BEGIN_EXAMPLE
@@ -10,10 +10,40 @@ Usage example:
   cd ~/git/
   git clone https://github.com/steinarb/derby-runner.git
   cd derby-runner
+  mvn install
   mvn derby:run
 #+END_EXAMPLE
 
 At this point derby server will be running and listening on port 1527 until Ctrl-C is pressed.
+
+It is possible to connect to the server with a client such as e.g. [[http://squirrel-sql.sourceforge.net/][Squirrel SQL]] using the url jdbc:derby://localhost/dbname (replace "localhost" with the hostname of the machine running the derby network server if connecting from a different computer, and replace "dbname" with the name of your database).
+
+/Note!/ Squirrel SQL requires a non-empty username and password on derby network connections, even if the server doesn't require them.  Use APP/APP for username/password ("APP" as the username will select the "APP" schema as the default schema, which is what you usually want, and the password can be any non-empty string).
+
+It is also possible to start the derby "[[http://db.apache.org/derby/papers/DerbyTut/ij_intro.html][ij]]" client from a sub-project of this project.
+
+To get an "ij" client running and connected:
+ 1. open a new command line window, and type:
+    #+BEGIN_EXAMPLE
+      cd ~/git/derby-runner/run-derby-ij/
+      mvn exec:java
+    #+END_EXAMPLE
+ 2. Then connect to a an existing database named "dbname" on the local server:
+    #+BEGIN_EXAMPLE
+      connect 'jdbc:derby://localhost:1527/dbname';
+    #+END_EXAMPLE
+    If "dbname" doesn't exist on the server, a new empty database can be created with the URL:
+    #+BEGIN_EXAMPLE
+      connect 'jdbc:derby://localhost:1527/dbname;create=true;'
+    #+END_EXAMPLE
+ 3. Type commands at the "ij>" prompt, e.g.
+    #+BEGIN_EXAMPLE
+      show tables;
+    #+END_EXAMPLE
+ 4. To end the "ij" session, give the command:
+    #+BEGIN_EXAMPLE
+      exit;
+    #+END_EXAMPLE
 
 * License
 
